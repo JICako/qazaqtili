@@ -1,1 +1,190 @@
-# qazaqtili
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <title>Қазақ тілі | Оқу порталы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{
+      box-sizing:border-box;
+      font-family:'Segoe UI',sans-serif;
+    }
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        linear-gradient(135deg, rgba(243,244,246,0.92), rgba(236,253,245,0.92)),
+        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      color:#1f2933;
+    }
+    header{
+      text-align:center;
+      padding:40px 20px;
+      background:linear-gradient(90deg,#e0f2fe,#ecfdf5);
+      border-bottom:1px solid #bae6fd;
+    }
+    header h1{
+      font-size:2.4rem;
+      margin-bottom:10px;
+    }
+    header p{
+      font-size:1.1rem;
+      color:#555;
+    }
+    nav{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:14px;
+      padding:20px;
+      background:#f0f9ff;
+    }
+    nav button{
+      background:linear-gradient(135deg,#38bdf8,#34d399);
+      color:#ffffff;
+      border:none;
+      padding:12px 22px;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:1rem;
+      box-shadow:0 6px 14px rgba(0,0,0,0.12);
+      transition:0.3s;
+    }
+    nav button:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 20px rgba(0,0,0,0.12);
+    }
+    section{
+      display:none;
+      max-width:1100px;
+      margin:20px auto;
+      padding:30px;
+      background:linear-gradient(180deg,#ffffff,#f0fdfa);
+      border-radius:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    }
+    section.active{display:block;}
+    h2{
+      margin-top:0;
+      font-size:1.9rem;
+    }
+    ul li{margin-bottom:8px;}
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+      margin-top:20px;
+    }
+    .card{
+      background:linear-gradient(180deg,#ffffff,#f9fafb);
+      padding:28px 20px;
+      border-radius:22px;
+      text-align:center;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+      transition:0.3s;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 14px 28px rgba(0,0,0,0.12);
+    }
+    .card span{
+      font-size:2.2rem;
+      display:block;
+      margin-bottom:12px;
+    }
+    footer{
+      text-align:center;
+      padding:20px;
+      color:#555;
+      font-size:0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Қазақ тілі пәніне арналған оқу порталы</h1>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Басты бет</button>
+  <button onclick="showSection('content')">Мазмұны</button>
+<button class="btn animated delay-3" onclick="startLearning()"><a href="teoria.html"><font color="white"><download>Теория</button></i></a></font></p></h2>
+  <button onclick="showSection('platforms')">Қосымша платформалар</button>
+</nav>
+
+<section id="home" class="active">
+  <h2>Басты бет</h2>
+  <p>
+Қазақ тілі мен әдебиеті пәнін оқытуға арналған білім беру порталы – цифрлық білім беру кеңістігін қалыптастыратын заманауи платформа. 
+Порталдың артықшылықтары:</p>
+<p>-Қолжетімділік</p>
+<p>-Оқу материалдарының жүйелілігі</p>
+<p>-Интерактивтілік</p>
+<p>-Уақытты үнемдеу</p>
+<p>-Көрнекілік және заманауи дизайн</p>
+
+</section>
+
+<section id="content">
+  <h2>Кіріспе</h2>
+  <p>
+Қазақ тілі мен әдебиеті — халқымыздың рухани қазынасы мен ұлттық болмысының айнасы. Бұл пән арқылы оқушы ана тілінің байлығын танып, көркем сөздің құдіретін сезінеді, әдеби мұралар арқылы адамгершілікке, елжандылыққа, ойлы сөйлеуге тәрбиеленеді. Тіл — ұлттың жаны, ал әдебиет — сол жанның көркем бейнесі. Осы пәнді меңгеру арқылы оқушылар өз ойын сауатты жеткізіп, ұлттық құндылықтарды құрметтеуге үйренеді.</p>
+<h2>Мақсаты,Міндеті</h2>
+  <p>
+Қазақ тілі мен әдебиеті пәнінің мақсаты – оқушылардың ана тіліне деген құрметін қалыптастыру, тілдік сауаттылығын арттыру, көркем әдебиет арқылы ұлттық құндылықтарды бойына сіңірген, шығармашылық және сыни ойлай алатын тұлға тәрбиелеу.</p>
+  <p>
+Білім алушылардыңқазақ тілінде сауатты сөйлеу және жазу дағдыларын қалыптастыру, көркем әдебиет арқылы ұлттық құндылықтарды таныту және шығармашылық ойлау қабілеттерін дамыту.</p>
+  <h2>Қарастырылатын пән,модульдер:</h2>
+  <ul>
+    <li>Қазақ тілі </li>
+    <li>Қазақ әдебиеті</li>
+  </ul>
+</section>
+
+<body>
+
+<div class="circle"></div>
+<div class="circle"></div>
+
+    <div id="content" class="content"></div>
+</div>
+
+<script>
+function showContent(section){
+    const content = document.getElementById("content");
+    content.classList.remove("show");
+
+</script>
+
+</body>
+
+<section id="platforms">
+  <h2>Қосымша платформалар</h2>
+  <ul>
+    <li><a href="https://learningapps.org" target="_blank">LearningApps</a></li>
+    <li><a href="https://aktobeagk.c-platonus.kz/" target="_blank">Platonus</a></li>
+    <li><a href="https://canva.com" target="_blank">Canva</a></li>
+    <li><a href="https://xmind.com/" target="_blank">Xmind</a></li>
+    <li><a href="https://web.diffit.me/" target="_blank">Diffit</a></li>
+    <li><a href="https://notebooklm.google/" target="_blank">NotebookLM</a></li>
+  </ul>
+</section>
+
+<footer>
+  © 2026 Қазақ тілі оқу порталы
+</footer>
+
+<script>
+  function showSection(id){
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+
+</body>
+</html>

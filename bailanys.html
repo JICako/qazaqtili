@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Қазақ тілі | Кері байланыс</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .card {
+        background: #fff;
+        width: 100%;
+        max-width: 420px;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        animation: fadeIn 0.8s ease;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2193b0;
+        margin-bottom: 10px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .btn-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #555;
+    }
+
+    .btn-wrap button {
+        font-size: 34px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .btn-wrap button:hover {
+        transform: scale(1.3);
+    }
+
+    input, textarea {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    textarea {
+        height: 70px;
+        resize: none;
+    }
+
+    .send {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        background: #2193b0;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .comments {
+        margin-top: 15px;
+        max-height: 150px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    .comment-item {
+        background: #f1f9fc;
+        padding: 8px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+    }
+
+    .comment-item b {
+        color: #2193b0;
+    }
+
+    canvas {
+        margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>📘 Кері байланыс</h1>
+    <p>Сабақты қалай түсіндің?</p>
+
+    <div class="buttons">
+        <div class="btn-wrap">
+            <button onclick="addFeedback(0)">😄</button>
+            <span>Өте жақсы</span>
+        </div>
+        <div class="btn-wrap">
+            <button onclick="addFeedback(1)">🙂</button>
+            <span>Жақсы</span>
+        </div>
+        <div class="btn-wrap">
+            <button onclick="addFeedback(2)">😐</button>
+            <span>Орташа</span>
+        </div>
+        <div class="btn-wrap">
+            <button onclick="addFeedback(3)">😕</button>
+            <span>Қиын</span>
+        </div>
+    </div>
+
+    <input id="name" type="text" placeholder="Аты-жөніңіз">
+    <textarea id="comment" placeholder="Пікіріңізді жазыңыз..."></textarea>
+    <button class="send" onclick="sendComment()">Жіберу</button>
+
+    <div class="comments" id="comments"></div>
+
+    <canvas id="chart" height="180"></canvas>
+
+    <!-- QR код үшін canvas -->
+    <canvas id="qrcode" width="150" height="150"></canvas>
+</div>
+
+<script>
+    let data = [0, 0, 0, 0];
+    let commentsList = [];
+
+    const chart = new Chart(document.getElementById('chart'), {
+        type: 'bar',
+        data: {
+            labels: ['Өте жақсы', 'Жақсы', 'Орташа', 'Қиын'],
+            datasets: [{
+                data: data,
+                backgroundColor: ['#4caf50','#8bc34a','#ffc107','#f44336']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    function addFeedback(index) {
+        data[index]++;
+        chart.update();
+        commentsList.push({type: 'feedback', value: index});
+        updateDisplay();
+    }
+
+    function sendComment() {
+        const name = document.getElementById("name").value.trim();
+        const text = document.getElementById("comment").value.trim();
+
+        if (name === "" || text === "") {
+            alert("Аты-жөніңізді және пікірді толтырыңыз!");
+            return;
+        }
+
+        const comment = {type: 'comment', name: name, text: text};
+        commentsList.unshift(comment);
+
+        document.getElementById("name").value = "";
+        document.getElementById("comment").value = "";
+
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        const container = document.getElementById('comments');
+        container.innerHTML = '';
+
+        commentsList.forEach(item => {
+            let div = document.createElement('div');
+            div.className = 'comment-item';
+
+            if(item.type === 'comment') {
+                div.innerHTML = `<b>${item.name}:</b> ${item.text}`;
+            } else if(item.type === 'feedback') {
+                const feedbackLabels = ['😄 Өте жақсы', '🙂 Жақсы', '😐 Орташа', '😕 Қиын'];
+                div.innerHTML = `<b>Кері байланыс:</b> ${feedbackLabels[item.value]}`;
+            }
+
+            container.appendChild(div);
+        });
+    }
+
+    // QR код генерациясы canvas-қа
+    const canvas = document.getElementById('qrcode');
+    QRCode.toCanvas(canvas, window.location.href, { width: 150 }, function (error) {
+      if (error) console.error(error);
+      console.log('QR код жасалды!');
+    });
+</script>
+
+</body>
+</html>

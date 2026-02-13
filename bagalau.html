@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сабақты бағалау</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #8360c3, #2ebf91);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .card {
+        background: #fff;
+        width: 100%;
+        max-width: 450px;
+        padding: 25px;
+        border-radius: 22px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        animation: fadeIn 0.8s ease;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2ebf91;
+        margin-bottom: 5px;
+    }
+
+    select, input {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .ratings {
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .rate {
+        font-size: 12px;
+        color: #555;
+    }
+
+    .rate button {
+        font-size: 30px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .rate button:hover {
+        transform: scale(1.3);
+    }
+
+    canvas {
+        margin-top: 20px;
+    }
+
+    .list {
+        margin-top: 15px;
+        max-height: 140px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    .item {
+        background: #f3f9f8;
+        padding: 8px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>📊 Сабақты бағалау</h1>
+
+    <select id="subject">
+        <option>Пәнді таңдаңыз</option>
+        <option>Қазақ тілі</option>
+    </select>
+
+    <input id="name" type="text" placeholder="Білім алушының аты-жөні">
+
+    <div class="ratings">
+        <div class="rate">
+            <button onclick="rate(0)">😕</button><br>0-49
+        </div>
+        <div class="rate">
+            <button onclick="rate(1)">😐</button><br>50-69
+        </div>
+        <div class="rate">
+            <button onclick="rate(2)">🙂</button><br>70-89
+        </div>
+        <div class="rate">
+            <button onclick="rate(3)">😄</button><br>90-100
+        </div>
+    </div>
+
+    <div class="list" id="list"></div>
+
+    <canvas id="chart" height="180"></canvas>
+</div>
+
+<script>
+    let scores = [0,0,0,0,0];
+
+    const chart = new Chart(document.getElementById("chart"), {
+        type: "bar",
+        data: {
+            labels: ["0-49", "50-69", "70-89", "90-100"],
+            datasets: [{
+                data: scores,
+                backgroundColor: ["#ff9800","#ffc107","#8bc34a","#4caf50"]
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            responsive: true
+        }
+    });
+
+    function rate(index) {
+        const name = document.getElementById("name").value.trim();
+        const subject = document.getElementById("subject").value;
+
+        if (name === "" || subject === "Пәнді таңдаңыз") {
+            alert("Пән мен аты-жөніңізді енгізіңіз!");
+            return;
+        }
+
+        scores[index]++;
+        chart.update();
+
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<b>${name}</b> (${subject}) — Баға: ${index+1}`;
+
+        document.getElementById("list").prepend(div);
+
+        document.getElementById("name").value = "";
+    }
+</script>
+
+</body>
+</html>
